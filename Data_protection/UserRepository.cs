@@ -7,6 +7,7 @@ public class User
     public int Id { get; set; }
     public string Username { get; set; }
     public string PasswordHash { get; set; }
+    public string Salt {  get; set; }
     public string Role {  get; set; }
 }
 
@@ -30,8 +31,9 @@ internal class UserRepository
             connection.Execute(@"
                 CREATE TABLE IF NOT EXISTS Users (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                Username TEXT NOT NULL,
+                Username TEXT NOT NULL UNIQUE,
                 PasswordHash TEXT NOT NULL,
+                Salt TEXT NOT NULL,
                 Role TEXT NOT NULL DEFAULT 'User' -- Добавлено поле для роли с значением 'User' по умолчанию
             )");
         }
@@ -44,7 +46,7 @@ internal class UserRepository
             connection.Open();
 
             // Вставляем нового пользователя в базу данных
-            connection.Execute("INSERT INTO Users (Username, PasswordHash, Role) VALUES (@Username, @PasswordHash, @Role)", user);
+            connection.Execute("INSERT INTO Users (Username, PasswordHash, Salt, Role) VALUES (@Username, @PasswordHash, @Salt,  @Role)", user);
         }
     }
 

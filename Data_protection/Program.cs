@@ -10,10 +10,11 @@
 
             // Пример регистрации пользователя
             authService.RegisterUser("Dmitry_Medvedev", "admin_password", "admin");
-            authService.RegisterUser("Ivan", "1234" , "User");
+            authService.RegisterUser("Dmitry_Medvedev", "admin_password", "admin");
+            authService.RegisterUser("Ivan", "admin_password", "User");
 
             // Пример аутентификации пользователя
-            bool isAuthenticated = authService.AuthenticateUser("Ivan", "1234", "User");
+            bool isAuthenticated = authService.AuthenticateUser("ivan", "admin_password", "User");
 
             if (isAuthenticated)
             {
